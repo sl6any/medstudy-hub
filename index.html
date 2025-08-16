@@ -30,13 +30,13 @@
     <p>© <span id="year"></span> MedStudy Hub • Built for quick revision. <a href="README.md">README</a></p>
   </footer>
 
-  <!-- All JS inline so Safari can’t skip it -->
+  <!-- All JS inline -->
   <script>
   // helpers
   const el = s => document.querySelector(s);
   const app = el('#app');
 
-  // theme
+  // state + theme
   const state = {
     theme: localStorage.getItem('theme') || 'dark',
     tab: 'quiz',
@@ -59,7 +59,23 @@
     applyTheme();
   });
 
-  // small OBGYN dataset embedded (so no fetch needed)
+  // ---- progress helpers (NEW) ----
+  const OBGYN_PROGRESS_KEY = 'obgyn_progress';
+  function saveProgress() {
+    localStorage.setItem(OBGYN_PROGRESS_KEY, String(state.current));
+  }
+  function loadProgress() {
+    const v = Number(localStorage.getItem(OBGYN_PROGRESS_KEY));
+    return Number.isFinite(v) ? v : 0; // 0-based index
+  }
+  // read start index from URL: #/topic/obgyn?start=71 (or ?q=71)
+  function getStartFromURL() {
+    const m = location.hash.match(/[?&](start|q)=(\d+)/i);
+    if (!m) return null;
+    return Math.max(1, parseInt(m[2], 10)) - 1; // convert to 0-based
+  }
+
+  // small embedded dataset so no fetch is required
   const OBGYN_QUESTIONS = [
     {id:1,question:"28-year-old at 5 weeks with bleeding + open os; most likely cause?",options:["Luteal phase defect","Asherman's","Cervical incompetence","Chromosomal abnormality"],answer:3,explanation:"Early loss most often due to chromosomal abnormalities."},
     {id:2,question:"CTG with recurrent late decelerations suggests…",options:["Placenta previa","Head compression","Cord compression","Uteroplacental insufficiency"],answer:3,explanation:"Late decels = uteroplacental insufficiency."},
@@ -69,7 +85,7 @@
     {id:6,question:"Advantage of mediolateral episiotomy?",options:["Easy repair","Less infection","Tighter introitus","Less anal extension"],answer:3,explanation:"Lower risk of OASIS."},
     {id:7,question:"Dizygotic twins are…",options:["Mono/mono","Mono/di","Di/mono","Di/di"],answer:3,explanation:"Always dichorionic–diamniotic."},
     {id:8,question:"Postcoital bleeding most commonly from…",options:["Cervix","Uterine body","Vagina","Vulva"],answer:0,explanation:"Cervical origin common."},
-    {id:9,question:"Best screening step for ↓ fetal movement at 34w?",options:["NST","BPP","Pelvic exam","Vibroacoustic"],answer:0,explanation:"Start with NST."},
+    {id:9,question:"Best step for ↓ fetal movement at 34w?",options:["NST","BPP","Pelvic exam","Vibroacoustic"],answer:0,explanation:"Start with NST."},
     {id:10,question:"First-line for primary dysmenorrhea?",options:["NSAIDs","COCP","Dilatation","Danazol"],answer:0,explanation:"NSAIDs first."}
   ];
 
@@ -115,34 +131,73 @@
   function renderObgyn(){
     if (!state.questions.length) {
       state.questions = OBGYN_QUESTIONS.slice();
-      state.current = 0; state.score = 0; state.answered = false; state.selectedIndex = null; state.filter='';
+      state.score = 0;
+      state.answered = false;
+      state.selectedIndex = null;
+      state.filter = '';
+
+      // NEW: decide where to start
+      const fromUrl = getStartFromURL();     // e.g., ?start=71
+      const fromStore = loadProgress();      // last saved index
+      const startIndex = (fromUrl !== null ? fromUrl : fromStore);
+      state.current = Math.min(Math.max(startIndex, 0), state.questions.length - 1);
     }
+
     const q = state.questions[state.current];
+
     app.innerHTML = `
       <section class="card">
         <div class="toolbar">
           <div class="tabbar" role="tablist">
-            <button class="${state.tab==='quiz'?'active':''}" id="tab-quiz">Quiz</button>
-            <button class="${state.tab==='browse'?'active':''}" id="tab-browse">Browse</button>
+            <button class="\${state.tab==='quiz'?'active':''}" id="tab-quiz">Quiz</button>
+            <button class="\${state.tab==='browse'?'active':''}" id="tab-browse">Browse</button>
           </div>
           <div style="flex:1"></div>
-          <span class="badge">Score: <strong>${state.score}</strong> / ${state.questions.length}</span>
+          <span class="badge">Score: <strong>\${state.score}</strong> / \${state.questions.length}</span>
+
+          <!-- NEW: start-at controls -->
+          <div class="badge" style="display:flex;gap:.4rem;align-items:center;">
+            <span>Start at</span>
+            <input id="jumpNum" class="input" type="number" min="1" max="\${state.questions.length}"
+                   value="\${state.current + 1}" style="width:90px;padding:.4rem .6rem">
+            <button class="btn ghost" id="btnJump">Go</button>
+          </div>
+
           <button class="btn ghost" id="btnReset">Reset</button>
         </div>
-        ${state.tab==='quiz' ? quizView(q) : browseView()}
+
+        \${state.tab==='quiz' ? quizView(q) : browseView()}
       </section>
     `;
+
     // events
     document.getElementById('tab-quiz').onclick = ()=>{state.tab='quiz'; renderObgyn();};
     document.getElementById('tab-browse').onclick = ()=>{state.tab='browse'; renderObgyn();};
+
     document.getElementById('btnReset').onclick = ()=>{
-      state.current=0; state.score=0; state.answered=false; state.selectedIndex=null; state.filter=''; shuffle(state.questions); renderObgyn();
+      state.current=0; state.score=0; state.answered=false; state.selectedIndex=null; state.filter='';
+      shuffle(state.questions);
+      saveProgress();
+      renderObgyn();
     };
+
+    // NEW: jump to number
+    document.getElementById('btnJump').onclick = () => {
+      const n = parseInt(document.getElementById('jumpNum').value, 10);
+      if (Number.isFinite(n)) {
+        state.current = Math.min(Math.max(n - 1, 0), state.questions.length - 1);
+        state.answered = false; state.selectedIndex = null;
+        saveProgress();
+        renderObgyn();
+      }
+    };
+
     if (state.tab==='quiz') {
       for (const b of document.querySelectorAll('.opt')) b.onclick = onChoose;
       document.getElementById('btnNext').onclick = nextQuestion;
       document.getElementById('btnReveal').onclick = ()=>{ state.answered = true; renderObgyn(); };
     }
+
     if (state.tab==='browse') {
       document.getElementById('search').oninput = e => { state.filter = e.target.value; renderObgyn(); };
       for (const t of document.querySelectorAll('.toggle')) t.onclick = () => {
@@ -160,19 +215,19 @@
         if (i === q.answer) cls += ' correct';
         else if (i === state.selectedIndex) cls += ' wrong';
       }
-      return `<button class="${cls}" data-index="${i}">${String.fromCharCode(65+i)}. ${opt}</button>`;
+      return `<button class="\${cls}" data-index="\${i}">\${String.fromCharCode(65+i)}. \${opt}</button>`;
     }).join('');
     return `
       <div class="q-item">
-        <div class="q-stem">${q.question}</div>
-        <div class="options">${options}</div>
+        <div class="q-stem">\${q.question} →</div>
+        <div class="options">\${options}</div>
         <div class="toolbar" style="margin-top:12px">
           <button class="btn secondary" id="btnReveal">Reveal</button>
           <button class="btn" id="btnNext">Next ▶</button>
           <span style="flex:1"></span>
-          <span class="badge">${state.current+1} / ${state.questions.length}</span>
+          <span class="badge">\${state.current+1} / \${state.questions.length}</span>
         </div>
-        ${state.answered ? `<div class="answer"><strong>Answer:</strong> ${String.fromCharCode(65+q.answer)} — ${q.options[q.answer]}${q.explanation?`<br><em>${q.explanation}</em>`:''}</div>` : ''}
+        \${state.answered ? `<div class="answer"><strong>Answer:</strong> \${String.fromCharCode(65+q.answer)} — \${q.options[q.answer]}\${q.explanation?`<br><em>\${q.explanation}</em>`:''}</div>` : ''}
       </div>
     `;
   }
@@ -184,21 +239,21 @@
     });
     const items = filtered.map(q => `
       <div class="card">
-        <div class="q-stem">${q.question}</div>
+        <div class="q-stem">\${q.question}</div>
         <div class="hr"></div>
         <div class="grid">
-          ${q.options.map((o,i)=>`<div class="badge">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+          \${q.options.map((o,i)=>`<div class="badge">\${String.fromCharCode(65+i)}. \${o}</div>`).join('')}
         </div>
-        <button class="btn ghost toggle" data-id="${q.id}" style="margin-top:10px">Show answer</button>
-        <div class="answer" id="ans-${q.id}" hidden><strong>Answer:</strong> ${String.fromCharCode(65+q.answer)} — ${q.options[q.answer]}${q.explanation?`<br><em>${q.explanation}</em>`:''}</div>
+        <button class="btn ghost toggle" data-id="\${q.id}" style="margin-top:10px">Show answer</button>
+        <div class="answer" id="ans-\${q.id}" hidden><strong>Answer:</strong> \${String.fromCharCode(65+q.answer)} — \${q.options[q.answer]}\${q.explanation?`<br><em>\${q.explanation}</em>`:''}</div>
       </div>
     `).join('');
     return `
       <div class="toolbar">
-        <input class="input" id="search" placeholder="Search…" value="${state.filter}">
-        <span class="badge">${filtered.length} shown</span>
+        <input class="input" id="search" placeholder="Search…" value="\${state.filter}">
+        <span class="badge">\${filtered.length} shown</span>
       </div>
-      <div class="grid">${items}</div>
+      <div class="grid">\${items}</div>
     `;
   }
 
@@ -208,12 +263,14 @@
     state.selectedIndex = idx;
     state.answered = true;
     if (idx === state.questions[state.current].answer) state.score += 1;
+    saveProgress();
     renderObgyn();
   }
   function nextQuestion(){
     state.current = (state.current + 1) % state.questions.length;
     state.answered = false;
     state.selectedIndex = null;
+    saveProgress();
     renderObgyn();
   }
   function shuffle(arr){
