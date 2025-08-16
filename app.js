@@ -19,7 +19,7 @@ function applyTheme() {
   if (state.theme === 'light') body.classList.add('light'); else body.classList.remove('light');
 }
 applyTheme();
-el('#toggleTheme').addEventListener('click', () => {
+const themeBtn = el('#toggleTheme'); if (themeBtn) themeBtn.addEventListener('click', () => {
   state.theme = state.theme === 'light' ? 'dark' : 'light';
   localStorage.setItem('theme', state.theme);
   applyTheme();
@@ -27,7 +27,7 @@ el('#toggleTheme').addEventListener('click', () => {
 
 // Router
 function route() {
-  const hash = location.hash || '#/';
+   hash = location.hash || '#/';
   if (hash === '#/' || hash === '#') return renderHome();
   if (hash.startsWith('#/topic/obgyn')) return renderObgyn();
   return renderNotFound();
@@ -82,7 +82,7 @@ function renderHome() {
 async function renderObgyn() {
   if (!state.questions.length) {
     try {
-      const res = await fetch('data/obgyn.json', {cache: 'no-store'});
+       res = await fetch('data/obgyn.json', {cache: 'no-store'});
       state.questions = await res.json();
       state.current = 0; state.score = 0; state.answered = false; state.selectedIndex = null;
     } catch (e) {
@@ -90,7 +90,7 @@ async function renderObgyn() {
       return;
     }
   }
-  const q = state.questions[state.current];
+   q = state.questions[state.current];
 
   app.innerHTML = `
     <section class="card">
@@ -222,5 +222,6 @@ function renderNotFound() {
   \`;
 }
 
-document.getElementById('year').textContent = new Date().getFullYear();
+const y = document.getElementById('year');
+if (y) y.textContent = new Date().getFullYear();
 route();
