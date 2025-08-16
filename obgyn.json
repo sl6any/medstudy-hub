@@ -1,0 +1,392 @@
+[
+  {
+    "id": 1,
+    "question": "A 28-year-old woman G3 P0020 at 5 weeks' gestation has vaginal bleeding and clots. Prior history of cervical incompetence with two second-trimester abortions and D&C. Cervical os is open, no ongoing bleeding. Most likely cause of current vaginal bleeding?",
+    "options": [
+      "Luteal phase defect",
+      "Asherman's syndrome",
+      "Cervical incompetence",
+      "Chromosomal abnormality"
+    ],
+    "answer": 3,
+    "explanation": "Early first-trimester bleeding with open os in this scenario is most commonly due to embryonic chromosomal abnormalities rather than cervical incompetence.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 2,
+    "question": "A 35-year-old at 34 weeks' gestation in labor. CTG shows recurrent late decelerations. Most likely diagnosis?",
+    "options": [
+      "Placenta previa",
+      "Head compression",
+      "Umbilical cord compression",
+      "Uteroplacental insufficiency"
+    ],
+    "answer": 3,
+    "explanation": "Recurrent late decelerations indicate uteroplacental insufficiency.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 3,
+    "question": "A 21-year-old G2 P1001 with 1 day of severe intermittent lower abdominal pain, nausea/emesis. Exam: RLQ tenderness/guarding and fullness. Pregnancy test negative. Most likely diagnosis?",
+    "options": [
+      "Acute cystitis",
+      "Ovarian torsion",
+      "Acute appendicitis",
+      "Ectopic pregnancy"
+    ],
+    "answer": 1,
+    "explanation": "Sudden severe unilateral pelvic pain with adnexal fullness in a nonpregnant woman suggests ovarian torsion.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 4,
+    "question": "Most likely predisposing factor for ectopic pregnancy?",
+    "options": [
+      "Induction of ovulation",
+      "Previous tubal pregnancy",
+      "Pelvic inflammatory disease",
+      "Intrauterine device use"
+    ],
+    "answer": 2,
+    "explanation": "PID causes tubal damage and is a major risk factor for ectopic pregnancy.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 5,
+    "question": "A 33-year-old G4 P2012 at 38 weeks with dizziness and faint sensation in bed for 2 weeks. Vitals stable; labs show mild anemia. Best management?",
+    "options": [
+      "Blood transfusion",
+      "Refer to neurologist",
+      "Avoid sleeping on the back",
+      "ECG and echocardiography"
+    ],
+    "answer": 2,
+    "explanation": "Supine hypotensive syndrome in late pregnancy is relieved by left lateral positioning.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 6,
+    "question": "After delivery, a single umbilical artery is noted. Which is associated?",
+    "options": [
+      "African race",
+      "Maternal diabetes",
+      "Low fetal mortality",
+      "Major fetal malformation in 80%"
+    ],
+    "answer": 1,
+    "explanation": "Single umbilical artery is associated with congenital anomalies; the provided key associates it with maternal diabetes.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 7,
+    "question": "Advantage of a mediolateral episiotomy during the second stage of labor?",
+    "options": [
+      "Easy repair",
+      "Less infection",
+      "Tighter introitus",
+      "Less anal extension"
+    ],
+    "answer": 3,
+    "explanation": "Mediolateral episiotomy reduces extension into the anal sphincter.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 8,
+    "question": "Dizygotic twin pregnancy: best description of membranes/placenta?",
+    "options": [
+      "Monochorionic monoamniotic for conjoined twins",
+      "Monochorionic diamniotic for same sex",
+      "Dichorionic monoamniotic for same sex",
+      "Dichorionic diamniotic regardless of sex"
+    ],
+    "answer": 3,
+    "explanation": "Dizygotic twins are always dichorionic and diamniotic.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 9,
+    "question": "Pregnant immigrant with chronic cough; IGRA positive. Next best step for definitive diagnosis?",
+    "options": [
+      "Chest X-ray",
+      "Sputum culture",
+      "Tuberculin skin test",
+      "Sputum smear cytology"
+    ],
+    "answer": 1,
+    "explanation": "Sputum culture is the gold standard for TB diagnosis.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 10,
+    "question": "24-week pregnant woman with mild intermittent asthma now has daily symptoms and weekly nighttime symptoms; FEV1 70% predicted. Most appropriate regimen now?",
+    "options": [
+      "SABA + oral glucocorticoids",
+      "Inhaled glucocorticoids + SABA",
+      "Inhaled glucocorticoids + LABA",
+      "LABA + inhaled glucocorticoids"
+    ],
+    "answer": 2,
+    "explanation": "Step-up to ICS + LABA for moderate persistent asthma in pregnancy.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 11,
+    "question": "28 weeks' gestation with coughing/dyspnea and allergies; lungs with rhonchi. Initial most appropriate test?",
+    "options": [
+      "Spirometry",
+      "Chest X-ray",
+      "Arterial blood gases",
+      "Hemoglobin estimation"
+    ],
+    "answer": 0,
+    "explanation": "Start with spirometry for suspected asthma.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 12,
+    "question": "History of genital warts treated 2 years ago; recurrent scant postcoital bleeding. Likely source?",
+    "options": [
+      "Uterine cervix",
+      "Uterine body",
+      "Vagina",
+      "Vulva"
+    ],
+    "answer": 0,
+    "explanation": "Postcoital bleeding is commonly cervical in origin.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 13,
+    "question": "Pudendal nerve block performed near ischial spine. Which structure remains fully sensitive?",
+    "options": [
+      "Urogenital diaphragm",
+      "Perineal body",
+      "Rectum",
+      "Vulva"
+    ],
+    "answer": 2,
+    "explanation": "Pudendal block does not anesthetize the rectum (visceral afferents).",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 14,
+    "question": "Primigravida with 12 weeks amenorrhea, hyperemesis, very high hCG, uterus 16-week size; US shows small fetus for dates. Most likely diagnosis?",
+    "options": [
+      "Choriocarcinoma",
+      "Hydatidiform mole",
+      "Toxemia of pregnancy",
+      "Placental site trophoblastic tumor"
+    ],
+    "answer": 1,
+    "explanation": "Hydatidiform mole presents with excessive uterine size and very high hCG.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 15,
+    "question": "Indication for RhoGAM postpartum?",
+    "options": [
+      "Mother Rh− and baby Rh+",
+      "Father Rh+ and baby Rh−",
+      "Mother Rh+ and baby Rh−",
+      "Father Rh− and baby Rh+"
+    ],
+    "answer": 0,
+    "explanation": "Administer to unsensitized Rh− mothers delivering Rh+ infants.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 16,
+    "question": "24-year-old with infertility, oligomenorrhea, 'pearl necklace' ovaries on TVUS. Most likely factor contributing to infertility?",
+    "options": [
+      "Tubal",
+      "Cervical",
+      "Ovulatory",
+      "Endometrial"
+    ],
+    "answer": 2,
+    "explanation": "Anovulation/oligo-ovulation is the key factor in PCOS infertility.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 17,
+    "question": "8 weeks since LMP with severe abdominal pain and vaginal bleeding; hypotension and tachycardia. Most likely diagnosis?",
+    "options": [
+      "Threatened abortion",
+      "Ectopic pregnancy",
+      "Complete abortion",
+      "Anovulatory cycle"
+    ],
+    "answer": 1,
+    "explanation": "Shock with early pregnancy suggests ruptured ectopic until proven otherwise.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 18,
+    "question": "A 23-year-old nulligravida complains of inability to conceive after 3 months of trying; cycles regular; partner healthy. Best action?",
+    "options": [
+      "Sperm count",
+      "Continue trying",
+      "Genetic testing",
+      "Tubal patency test"
+    ],
+    "answer": 1,
+    "explanation": "Infertility is not diagnosed until after 12 months (6 months if >35).",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 19,
+    "question": "15-year-old with primary dysmenorrhea and normal exam. Most appropriate management?",
+    "options": [
+      "NSAIDs",
+      "Combined OCP",
+      "Cervical dilatation",
+      "Danazol"
+    ],
+    "answer": 0,
+    "explanation": "First-line therapy is NSAIDs.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 20,
+    "question": "8-week pregnancy with diagnosed cervical incompetence. Most appropriate management?",
+    "options": [
+      "Insert cerclage this week",
+      "Confirm with Hegar dilator",
+      "Insert cerclage at 14–16 weeks",
+      "Begin beta-mimetic drugs"
+    ],
+    "answer": 2,
+    "explanation": "Prophylactic cerclage is placed at 12–14 (up to 16) weeks in confirmed cases.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 21,
+    "question": "31-year-old with negative HPV and Pap last year and again this year. When to repeat screening?",
+    "options": [
+      "6 months",
+      "1 year",
+      "2 years",
+      "3 years"
+    ],
+    "answer": 3,
+    "explanation": "With negative co-testing, interval can be extended to 3 years per the provided key.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 22,
+    "question": "5-minute Apgar: HR 120, irregular breathing with gasps, coughs/cries on stimulation, some flexion of extremities, pink body with blue extremities. Most accurate Apgar score?",
+    "options": [
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "answer": 2,
+    "explanation": "Apgar 8 fits these findings.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 23,
+    "question": "20-year-old with severe acne, irregular menses, mild hirsutism; labs: LH elevated, borderline-high prolactin, testosterone mildly elevated. Which additional labs should be obtained?",
+    "options": [
+      "TSH and free T3/T4",
+      "Progesterone and TSH",
+      "DHEA and androstenedione",
+      "Glucose tolerance and lipid profile"
+    ],
+    "answer": 3,
+    "explanation": "In suspected PCOS, screen for metabolic syndrome with OGTT and lipid profile.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 24,
+    "question": "30-year-old with infertility, irregular bleeding, hirsutism, enlarged ovaries; DHEA and 17-OHP normal. Most likely lab pattern?",
+    "options": [
+      "Normal testosterone",
+      "Decreased free androgen index",
+      "Increased thyroid hormones",
+      "FSH:LH ratio of 1:3"
+    ],
+    "answer": 3,
+    "explanation": "PCOS often shows relatively higher LH than FSH (e.g., 1:3).",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 25,
+    "question": "Which vaccine is appropriate to administer during pregnancy?",
+    "options": [
+      "Rubella",
+      "Measles",
+      "Influenza",
+      "Varicella"
+    ],
+    "answer": 2,
+    "explanation": "Inactivated influenza vaccine is recommended in pregnancy.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 26,
+    "question": "34-week gestation with decreased fetal movement, no contractions or bleeding. Most appropriate next step?",
+    "options": [
+      "Non-stress test",
+      "Biophysical profile",
+      "Pelvic examination",
+      "Vibroacoustic stimulation"
+    ],
+    "answer": 0,
+    "explanation": "Start with a non-stress test to assess fetal well-being.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 27,
+    "question": "Post–tubal ligation woman with bright red spotting; pelvic fullness over right adnexa; last menses 6 weeks ago. Best next step?",
+    "options": [
+      "Laparoscopy",
+      "Pregnancy test",
+      "Pelvic ultrasound",
+      "Endometrial biopsy"
+    ],
+    "answer": 1,
+    "explanation": "First step is always a pregnancy test in reproductive-aged women with bleeding.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 28,
+    "question": "6 weeks postpartum, exclusively breastfeeding; wants contraception, no smoking or cardiac risk. Most appropriate?",
+    "options": [
+      "Depo-Provera injection",
+      "Transdermal patch",
+      "Combined oral pill",
+      "Vaginal ring"
+    ],
+    "answer": 0,
+    "explanation": "Progestin-only methods (e.g., DMPA) are preferred early postpartum during breastfeeding.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 29,
+    "question": "20 days postpartum with yellow-white, odorless discharge; cervix pink; no uterine tenderness; microscopy positive for leukocytes/epithelial cells. Most appropriate management?",
+    "options": [
+      "Dipstick urinalysis",
+      "Culture discharge",
+      "Metronidazole",
+      "Reassurance"
+    ],
+    "answer": 3,
+    "explanation": "Normal lochia alba—reassure.",
+    "source": "OBGYN 2.pdf"
+  },
+  {
+    "id": 30,
+    "question": "Pregnant woman with insulin-dependent diabetes (class F with nephritis) and chronic hypertension. Which complication most likely?",
+    "options": [
+      "Stillbirth",
+      "Pre-eclampsia",
+      "Shoulder dystocia",
+      "Large-for-gestational-age infant"
+    ],
+    "answer": 1,
+    "explanation": "Chronic HTN + diabetes increases preeclampsia risk.",
+    "source": "OBGYN 2.pdf"
+  }
+]

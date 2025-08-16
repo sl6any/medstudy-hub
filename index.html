@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedStudy Hub</title>
+  <meta name="description" content="Lightweight study hub for Pedia, OBGYN, Surgery, and Medicine.">
+  <link rel="icon" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="assets/favicon.svg" alt="" class="logo" />
+      <h1>MedStudy Hub</h1>
+    </div>
+    <nav class="top-nav">
+      <button id="toggleTheme" class="btn ghost" aria-label="Toggle theme">🌗</button>
+      <a class="btn" href="#/">Home</a>
+      <a class="btn" href="#/topic/obgyn">OBGYN</a>
+      <a class="btn disabled" href="#/topic/pedia" title="Coming soon">Pedia</a>
+      <a class="btn disabled" href="#/topic/surgery" title="Coming soon">Surgery</a>
+      <a class="btn disabled" href="#/topic/medicine" title="Coming soon">Medicine</a>
+    </nav>
+  </header>
+
+  <main id="app"></main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> MedStudy Hub • Built for quick revision. <a href="README.md">README</a></p>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
