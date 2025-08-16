@@ -33,7 +33,237 @@
     <p>© <span id="year"></span> MedStudy Hub • Built for quick revision. <a href="README.md">README</a></p>
   </footer>
 
-  <script defer src="app2.js"></script>
-  <script>document.querySelector('#app').innerHTML = '<div class="card"><h3>JS is running ✅</h3></div>';</script>
+  <!-- <script defer src="app2.js"></script> -->
+
+<script>
+alert('MedStudy Hub: JS loaded');
+// MedStudy Hub — vanilla JS SPA (no bundlers)
+// Hash router
+const el = sel => document.querySelector(sel);
+const app = el('#app');
+const state = {
+  theme: localStorage.getItem('theme') || 'dark',
+  tab: 'quiz', // 'quiz' | 'browse'
+  questions: [],
+  current: 0,
+  score: 0,
+  answered: false,
+  selectedIndex: null,
+  filter: ''
+};
+
+// Theme toggle
+const body = document.body;
+function applyTheme() {
+  if (state.theme === 'light') body.classList.add('light'); else body.classList.remove('light');
+}
+applyTheme();
+const themeBtn = el('#toggleTheme'); if (themeBtn) themeBtn.addEventListener('click', () => {
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  localStorage.setItem('theme', state.theme);
+  applyTheme();
+});
+
+// Router
+function route() {
+   hash = location.hash || '#/';
+  if (hash === '#/' || hash === '#') return renderHome();
+  if (hash.startsWith('#/topic/obgyn')) return renderObgyn();
+  return renderNotFound();
+}
+window.addEventListener('hashchange', route);
+
+// Home
+function renderHome() {
+  app.innerHTML = `
+    <section class="hero">
+      <div class="panel">
+        <h2>Pick your topic</h2>
+        <p>Your lightweight study space for <strong>Pedia</strong>, <strong>OBGYN</strong>, <strong>Surgery</strong>, and <strong>Medicine</strong>.</p>
+        <div class="grid" style="margin-top:12px">
+          <a class="card" href="#/topic/obgyn" aria-label="OBGYN">
+            <h3>OBGYN</h3>
+            <p>MCQs + quiz mode powered by your uploaded content.</p>
+            <span class="badge">Ready</span>
+          </a>
+          <div class="card">
+            <h3>Pedia</h3>
+            <p>Coming soon — plug in JSON and go.</p>
+            <span class="badge">Todo</span>
+          </div>
+          <div class="card">
+            <h3>Surgery</h3>
+            <p>Coming soon — shared UX and tooling.</p>
+            <span class="badge">Todo</span>
+          </div>
+          <div class="card">
+            <h3>Medicine</h3>
+            <p>Coming soon — add a data file when ready.</p>
+            <span class="badge">Todo</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>How it works</h2>
+        <ol>
+          <li>Click <span class="kbd">OBGYN</span> to start.</li>
+          <li>Choose <strong>Quiz</strong> or <strong>Browse</strong> tab.</li>
+          <li>Answers are checked instantly; your score is tracked.</li>
+        </ol>
+        <div class="hr"></div>
+        <p><strong>Tip:</strong> Add more topics by dropping JSON files into <span class="code">/data</span> and extending <span class="code">app.js</span>.</p>
+      </div>
+    </section>
+  `;
+}
+
+// OBGYN page
+async function renderObgyn() {
+  if (!state.questions.length) {
+    try {
+       res = await fetch('data/obgyn.json', {cache: 'no-store'});
+      state.questions = await res.json();
+      state.current = 0; state.score = 0; state.answered = false; state.selectedIndex = null;
+    } catch (e) {
+      app.innerHTML = `<div class="card"><h3>Could not load OBGYN data</h3><p>${e}</p></div>`;
+      return;
+    }
+  }
+   q = state.questions[state.current];
+
+  app.innerHTML = `
+    <section class="card">
+      <div class="toolbar">
+        <div class="tabbar" role="tablist" aria-label="Mode">
+          <button class="${state.tab==='quiz'?'active':''}" role="tab" aria-selected="${state.tab==='quiz'}" id="tab-quiz">Quiz</button>
+          <button class="${state.tab==='browse'?'active':''}" role="tab" aria-selected="${state.tab==='browse'}" id="tab-browse">Browse</button>
+        </div>
+        <div style="flex:1"></div>
+        <span class="badge" title="Score">Score: <strong>${state.score}</strong> / ${state.questions.length}</span>
+        <button class="btn ghost" id="btnReset">Reset</button>
+      </div>
+
+      ${state.tab==='quiz' ? quizView(q) : browseView()}
+    </section>
+  `;
+
+  // Tab switches
+  el('#tab-quiz').addEventListener('click', () => { state.tab='quiz'; renderObgyn(); });
+  el('#tab-browse').addEventListener('click', () => { state.tab='browse'; renderObgyn(); });
+  el('#btnReset').addEventListener('click', () => {
+    state.current = 0; state.score = 0; state.answered=false; state.selectedIndex = null; state.filter=''; shuffle(state.questions); renderObgyn();
+  });
+
+  // Quiz events
+  if (state.tab==='quiz') {
+    for (const optBtn of document.querySelectorAll('.opt')) {
+      optBtn.addEventListener('click', onChoose);
+    }
+    el('#btnNext').addEventListener('click', nextQuestion);
+    el('#btnReveal').addEventListener('click', () => {
+      state.answered = true; renderObgyn();
+    });
+  }
+
+  // Browse events
+  if (state.tab==='browse') {
+    el('#search').addEventListener('input', (e) => { state.filter = e.target.value; renderObgyn(); });
+    for (const t of document.querySelectorAll('.toggle')) {
+      t.addEventListener('click', () => {
+        const id = t.getAttribute('data-id');
+        const ans = document.querySelector('#ans-'+id);
+        ans.hidden = !ans.hidden;
+      });
+    }
+  }
+}
+
+function quizView(q) {
+  const options = q.options.map((opt, i) => {
+    let cls = 'opt';
+    if (state.answered) {
+      if (i === q.answer) cls += ' correct';
+      else if (i === state.selectedIndex) cls += ' wrong';
+    }
+    return `<button class="${cls}" data-index="${i}">${String.fromCharCode(65+i)}. ${opt}</button>`;
+  }).join('');
+
+  return `
+    <div class="q-item">
+      <div class="q-stem">${q.question}</div>
+      <div class="options">${options}</div>
+      <div class="toolbar" style="margin-top:12px">
+        <button class="btn secondary" id="btnReveal">Reveal</button>
+        <button class="btn" id="btnNext">Next ▶</button>
+        <span style="flex:1"></span>
+        <span class="badge">${state.current+1} / ${state.questions.length}</span>
+      </div>
+      ${state.answered ? `<div class="answer"><strong>Answer:</strong> ${String.fromCharCode(65+q.answer)} — ${q.options[q.answer]}${q.explanation?`<br><em>${q.explanation}</em>`:''}</div>` : ''}
+    </div>
+  `;
+}
+
+function browseView() {
+  const filtered = state.questions.filter(q => {
+    const terms = state.filter.toLowerCase().split(/\s+/).filter(Boolean);
+    return terms.every(t => (q.question+q.options.join(' ')+(q.explanation||'')).toLowerCase().includes(t));
+  });
+  const items = filtered.map(q => `
+    <div class="card">
+      <div class="q-stem">${q.question}</div>
+      <div class="hr"></div>
+      <div class="grid">
+        ${q.options.map((o,i)=>`<div class="badge">${String.fromCharCode(65+i)}. ${o}</div>`).join('')}
+      </div>
+      <button class="btn ghost toggle" data-id="${q.id}" style="margin-top:10px">Show answer</button>
+      <div class="answer" id="ans-${q.id}" hidden><strong>Answer:</strong> ${String.fromCharCode(65+q.answer)} — ${q.options[q.answer]}${q.explanation?`<br><em>${q.explanation}</em>`:''}</div>
+    </div>
+  `).join('');
+
+  return `
+    <div class="toolbar">
+      <input class="input" id="search" placeholder="Search questions, options, keywords…" value="${state.filter}">
+      <span class="badge">${filtered.length} shown</span>
+    </div>
+    <div class="grid">${items}</div>
+  `;
+}
+
+function onChoose(e) {
+  if (state.answered) return;
+  const idx = Number(e.currentTarget.getAttribute('data-index'));
+  state.selectedIndex = idx;
+  state.answered = true;
+  if (idx === state.questions[state.current].answer) state.score += 1;
+  renderObgyn();
+}
+
+function nextQuestion() {
+  state.current = (state.current + 1) % state.questions.length;
+  state.answered = false;
+  state.selectedIndex = null;
+  renderObgyn();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function renderNotFound() {
+  app.innerHTML = \`
+    <div class="card">
+      <h3>Page not found</h3>
+      <p>Try going <a href="#/">home</a>.</p>
+    </div>
+  \`;
+}
+
+const y = document.getElementById('year');
+if (y) y.textContent = new Date().getFullYear();
+route();
+</script>
 </body>
 </html>
