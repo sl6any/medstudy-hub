@@ -1,3 +1,4 @@
+alert('MedStudy Hub: JS loaded');
 // MedStudy Hub — vanilla JS SPA (no bundlers)
 // Hash router
 const el = sel => document.querySelector(sel);
